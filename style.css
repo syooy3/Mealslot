@@ -16,17 +16,14 @@ body {
 
 .reel {
   position: absolute;
-  top: 160px;
   width: 80px;
-  height: 80px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  height: auto;
+  top: 100px;
 }
 
 .reel1 { left: 90px; }
-.reel2 { left: 210px; }
-.reel3 { left: 330px; }
+.reel2 { left: 190px; }
+.reel3 { left: 290px; }
 
 .spin-button {
   position: absolute;
