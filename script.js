@@ -1,6 +1,15 @@
 const foods = [
-  'food/chicken.png',
-  'food/kimbap.png',
+  'chicken.png',
+  'kimbap.png',
+  'hamburger.png',
+  'pasta.png',
+  'ramen.png',
+  'salad.png',
+  'tteokbokki.png',
+  'gukbap.png',
+  'sushi.png',
+  'taco.png',
+  'pizza.png'
 ];
 
 const reels = [
