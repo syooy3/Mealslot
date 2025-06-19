@@ -1,34 +1,55 @@
 body {
   margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   background: #ffffff;
 }
 
-.container {
+.slot-container {
   position: relative;
-  width: 500px;
-  margin: 50px auto;
+  width: fit-content;
 }
 
 .slot-bg {
-  width: 100%;
   display: block;
-}
-
-.reel {
-  position: absolute;
-  width: 80px;
+  max-width: 100%;
   height: auto;
-  top: 100px;
 }
 
-.reel1 { left: 90px; }
-.reel2 { left: 190px; }
-.reel3 { left: 290px; }
-
+/* 버튼 위치: 슬롯머신 이미지 기준 */
 .spin-button {
   position: absolute;
-  top: 275px;
-  left: 200px;
-  width: 100px;
+  left: 50%;     /* 중앙에서 왼쪽으로 이동 시작 */
+  bottom: 20px;  /* 슬롯머신 아래에서 위로 20px */
+  transform: translateX(-50%); /* 정확한 중앙 정렬 */
+  width: 80px;
+  height: auto;
   cursor: pointer;
+  z-index: 10;
+}
+
+/* 릴 윈도우들 (예시 좌표, 이미지에 맞게 조정 필요) */
+.reel-window {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  z-index: 5;
+}
+
+.reel1 {
+  top: 90px;
+  left: 60px;
+}
+
+.reel2 {
+  top: 90px;
+  left: 160px;
+}
+
+.reel3 {
+  top: 90px;
+  left: 260px;
 }
