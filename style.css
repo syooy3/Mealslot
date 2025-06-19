@@ -8,33 +8,33 @@ body {
 
 .slot-container {
   position: absolute;
-  top: 100px;
-  left: 100px;
+  top: 70px;
+  left: 510px;
 }
 
 .slot-bg {
   display: block;
-  width: 400px;
+  width: 500px;
   height: auto;
 }
 
 .spin-button {
   position: absolute;
-  top: 285px;
-  left: 232px;
-  width: 80px;
+  top: 353.5px;
+  left: 289px;
+  width: 108px;
   cursor: pointer;
   z-index: 10;
 }
 
 .reel-window {
   position: absolute;
-  width: 231px;
-  height: 142px;
-  top: 166px;
+  width: 292px;
+  height: 180px;
+  top: 206px;
 }
 
-.reel1 { left: 79px; }
-.reel2 { left: 79px; }
-.reel3 { left: 79px; }
+.reel1 { left: 98px; }
+.reel2 { left: 97px; }
+.reel3 { left: 96px; }
 
