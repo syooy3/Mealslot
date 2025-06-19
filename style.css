@@ -19,12 +19,21 @@ body {
 }
 
 .spin-button {
+  background-image: url(button-default.png');
   position: absolute;
   top: 353.5px;
   left: 289px;
   width: 108px;
   cursor: pointer;
   z-index: 10;
+}
+
+#spin-button:hover {
+  background-image: url('button-hover.png');
+}
+
+#spin-button:active {
+  background-image: url('button-active.png');
 }
 
 .reel-window {
