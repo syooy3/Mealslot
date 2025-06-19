@@ -1,41 +1,40 @@
 body {
   margin: 0;
   padding: 0;
+  position: relative;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: #ffffff;
 }
 
 .slot-container {
-  position: relative;
-  width: fit-content;
+  position: absolute;
+  top: 100px;
+  left: 100px;
 }
 
 .slot-bg {
-  max-width: 100%;
   display: block;
+  width: 400px;
   height: auto;
 }
 
-.reel-window {
-  position: absolute;
-  width: 360px;
-  height: 220px;
-  top: 255px;
-}
-
-.reel1 { left: 120px; }
-.reel2 { left: 119px; }
-.reel3 { left: 117px; }
-
 .spin-button {
   position: absolute;
-  left: 50%;
-  bottom: 30px;
-  transform: translateX(-50%);
+  top: 285px;
+  left: 232px;
   width: 80px;
   cursor: pointer;
   z-index: 10;
 }
+
+.reel-window {
+  position: absolute;
+  width: 231px;
+  height: 142px;
+  top: 166px;
+}
+
+.reel1 { left: 79px; }
+.reel2 { left: 79px; }
+.reel3 { left: 79px; }
+
