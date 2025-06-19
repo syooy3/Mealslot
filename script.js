@@ -25,3 +25,9 @@ function spinReel(reelClass, delay) {
     reel.style.backgroundImage = `url(${foods[Math.floor(Math.random() * foods.length)]})`;
   }, delay);
 }
+
+document.getElementById('spin-button').addEventListener('click', () => {
+  spinReel('.reel1', 1000);
+  spinReel('.reel2', 2000);
+  spinReel('.reel3', 3000);
+});
