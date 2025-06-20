@@ -19,7 +19,7 @@ body {
 }
 
 .spin-button {
-  background-image: url(button-default.png');
+  background-image: url('button-default.png');
   position: absolute;
   top: 353.5px;
   left: 289px;
