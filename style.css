@@ -32,8 +32,9 @@ body {
   background-image: url('button-hover.png');
 }
 
-#spin-button:active {
+#spin-button.spinning {
   background-image: url('button-active.png');
+  pointer-events: none;
 }
 
 .reel-window {
