@@ -1,20 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MealSlot</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="slot-container">
-    <img class="slot-bg" src="slotmachine.jpg" alt="slot machine background">
-    <div class="reel-window">
-      <div class="reel reel1"></div>
-      <div class="reel reel2"></div>
-      <div class="reel reel3"></div>
+  <div class="container">
+    <div class="slot-machine">
+    
+      <div class="reel" id="reel1">
+        <div class="food-item"></div>
+      </div>
+      <div class="reel" id="reel2">
+        <div class="food-item"></div>
+      </div>
+      <div class="reel" id="reel3">
+        <div class="food-item"></div>
+      </div>
+      
+      <div class="controls">
+        <button id="spin-button" class="spin-button">
+          <span class="sr-only">스핀</span>
+        </button>
+      </div>
+      
+      <div class="result-message" id="result-message">
+        <span class="message-text"></span>
+      </div>
+      
+      <div class="bottom-text">
+        Spin to choose your meals!
+      </div>
     </div>
-    <div id="spin-button" class="spin-button"></div>
+
+    <div class="jackpot-animation" id="jackpot-animation">
+      <div class="confetti-container" id="confetti-container"></div>
+      <div class="jackpot-message">대박!</div>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <audio id="hover-sound" src="button-hover.mp3" preload="auto"></audio>
+  <audio id="active-sound" src="button-active.mp3" preload="auto"></audio>
+  <audio id="spin-sound" src="spinning.mp3" preload="auto"></audio>
+
+  
+  <script src="app.js"></script>
 </body>
 </html>
