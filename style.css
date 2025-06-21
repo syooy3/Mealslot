@@ -678,7 +678,7 @@ body {
   position: relative;
   width: 100%;
   padding: 80px 20px;
-  background-image: url('https://raw.githubusercontent.com/syooy3/Mealslot/main/slotmachine.jpg');
+  background-image: url('slotmachine.jpg');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -706,7 +706,7 @@ body {
   left: 23.9%;
   width: 50.3%;
   height: 23.2%;
-  background-image: url('https://raw.githubusercontent.com/syooy3/Mealslot/main/reel-window-1.png');
+  background-image: url('reel-window-1.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -718,7 +718,7 @@ body {
   left: 38%;
   width: 21.5%;
   height: 23.3%;
-  background-image: url('https://raw.githubusercontent.com/syooy3/Mealslot/main/reel-window-2.png');
+  background-image: url('reel-window-2.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -730,7 +730,7 @@ body {
   left: 23.1%;
   width: 51%;
   height: 22%;
-  background-image: url('https://raw.githubusercontent.com/syooy3/Mealslot/main/reel-window-3.png');
+  background-image: url('reel-window-3.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -788,7 +788,7 @@ body {
   left: 323px;
   width: 105px;
   height: 80px;
-  background-image: url('https://raw.githubusercontent.com/syooy3/Mealslot/main/button-default.png');
+  background-image: url('button-default.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -800,12 +800,12 @@ body {
 }
 
 .spin-button:hover {
-  background-image: url('https://raw.githubusercontent.com/syooy3/Mealslot/main/button-hover.png');
+  background-image: url('button-hover.png');
   transform: scale(1.05);
 }
 
 .spin-button:active {
-  background-image: url('https://raw.githubusercontent.com/syooy3/Mealslot/main/button-active.png');
+  background-image: url('button-active.png');
   transform: scale(1);
 }
 
