@@ -1,3 +1,7 @@
+const hoverSound = document.getElementById('hover-sound');
+const clickSound = document.getElementById('click-sound');
+const spinSound = document.getElementById('spin-sound');
+
 class MealSlot {
   constructor() {
     this.foods = [
@@ -27,7 +31,17 @@ class MealSlot {
   init() {
     this.spinButton.addEventListener('click', () => this.spin());
     this.setupInitialReels();
-    
+
+    this.spinButton.addEventListener('mouseenter', () => {
+    hoverSound.currentTime = 0;
+    hoverSound.play();
+    });
+
+    this.spinButton.addEventListener('mousedown', () => {
+    clickSound.currentTime = 0;
+    clickSound.play();
+    });
+
     console.log('MealSlot initialized');
   }
 
@@ -68,6 +82,9 @@ class MealSlot {
   }
 
   spin() {
+    spinSound.currentTime = 0;
+    spinSound.play();
+
     if (this.isSpinning) return;
     
     console.log('Starting spin...');
@@ -210,6 +227,8 @@ extractFileName(url) {
     }
     
     // Re-enable spinning
+    spinSound.pause();
+    spinSound.currentTime = 0;
     this.isSpinning = false;
     this.spinButton.disabled = false;
     console.log('Spin complete, button re-enabled');
