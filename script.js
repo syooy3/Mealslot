@@ -1,53 +1,319 @@
-const foods = [
-  'chicken.png',
-  'kimbap.png',
-  'hamburger.png',
-  'pasta.png',
-  'ramen.png',
-  'salad.png',
-  'tteokbokki.png',
-  'gukbap.png',
-  'sushi.png',
-  'taco.png',
-  'pizza.png'
-];
+class MealSlot {
+  constructor() {
+    this.foods = [
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/sushi.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/pizza.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/kimbap.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/taco.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/ramen.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/pasta.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/tteokbokki.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/gukbap.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/chicken.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/salad.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/hamburger.png'
+  ];
+    this.reels = document.querySelectorAll('.reel');
+    this.spinButton = document.getElementById('spin-button');
+    this.resultMessage = document.getElementById('result-message');
+    this.jackpotAnimation = document.getElementById('jackpot-animation');
+    this.confettiContainer = document.getElementById('confetti-container');
+    this.isSpinning = false;
+    this.results = [];
+    
+    this.init();
+  }
 
-const reels = [
-  document.querySelector('.reel1'),
-  document.querySelector('.reel2'),
-  document.querySelector('.reel3')
-];
+  init() {
+    this.spinButton.addEventListener('click', () => this.spin());
+    this.setupInitialReels();
+    
+    console.log('MealSlot initialized');
+  }
 
-const spinButton = document.getElementById('spin-button');
+  setFoodImage(foodItem, imageUrl) {
+    // Clear previous content
+    foodItem.innerHTML = '';
+    
+    // Create and configure image element
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.alt = 'Food item';
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'contain';
+    img.style.borderRadius = '4px';
+    
+    // Handle image loading errors
+    img.onerror = () => {
+      console.warn('Failed to load image:', imageUrl);
+      // Fallback to emoji if image fails to load
+      foodItem.innerHTML = '🍽️';
+      foodItem.style.fontSize = '3.5rem';
+      foodItem.style.display = 'flex';
+      foodItem.style.alignItems = 'center';
+      foodItem.style.justifyContent = 'center';
+    };
+    
+    // Add image to container
+    foodItem.appendChild(img);
+  }
 
-// 각 릴을 회전시키는 함수
-function spinReel(reel, delay) {
-  let i = 0;
-  // 0.1초마다 음식 이미지를 변경하여 회전 효과 생성
-  const interval = setInterval(() => {
-    reel.style.backgroundImage = `url(${foods[i % foods.length]})`;
-    i++;
-  }, 100);
+  setupInitialReels() {
+    this.reels.forEach((reel, index) => {
+      const foodItem = reel.querySelector('.food-item');
+      const randomFood = this.foods[Math.floor(Math.random() * this.foods.length)];
+      this.setFoodImage(foodItem, randomFood);
+    });
+  }
 
-  // 지정된 delay 이후에 회전을 멈추고 최종 이미지를 설정
-  setTimeout(() => {
-    clearInterval(interval);
-    reel.style.backgroundImage = `url(${foods[Math.floor(Math.random() * foods.length)]})`;
-  }, delay);
+  spin() {
+    if (this.isSpinning) return;
+    
+    console.log('Starting spin...');
+    this.isSpinning = true;
+    this.spinButton.disabled = true;
+    this.results = [];
+
+    this.resultMessage.classList.remove('active');
+    
+    // Reset any previous jackpot animation
+    this.jackpotAnimation.classList.remove('active');
+    this.confettiContainer.innerHTML = '';
+    
+    // Start spinning animation for all reels
+    this.reels.forEach((reel, index) => {
+      reel.classList.add('spinning');
+      this.startSpinningReel(reel, index);
+    });
+    
+    // Stop spinning after different delays for each reel
+    setTimeout(() => this.stopReel(0), 1500);
+    setTimeout(() => this.stopReel(1), 2000);
+    setTimeout(() => this.stopReel(2), 2500);
+    
+    // Check results after all reels stop
+    setTimeout(() => this.checkResults(), 3200);
+  }
+
+  startSpinningReel(reel, index) {
+    const foodItem = reel.querySelector('.food-item');
+    
+    // Create spinning effect by rapidly changing the food items
+    const spinInterval = setInterval(() => {
+      const randomFood = this.foods[Math.floor(Math.random() * this.foods.length)];
+      this.setFoodImage(foodItem, randomFood);
+    }, 100);
+    
+    // Store interval for later cleanup
+    reel.spinInterval = spinInterval;
+  }
+
+  stopReel(reelIndex) {
+    const reel = this.reels[reelIndex];
+    const foodItem = reel.querySelector('.food-item');
+    
+    // Clear the spinning interval
+    clearInterval(reel.spinInterval);
+    
+    // Remove spinning class and add stopping class
+    reel.classList.remove('spinning');
+    reel.classList.add('stopping');
+    
+    // Set final random result
+    const finalFood = this.foods[Math.floor(Math.random() * this.foods.length)];
+    this.setFoodImage(foodItem, finalFood);
+    
+    // Store the result for checking
+    this.results[reelIndex] = finalFood;
+    
+    console.log(`Reel ${reelIndex + 1} stopped with: ${finalFood}`);
+    
+    // Remove stopping class after animation
+    setTimeout(() => {
+      reel.classList.remove('stopping');
+    }, 600);
+  }
+
+  updateMessage(text, color = 'white') {
+  const messageElement = this.resultMessage.querySelector('.message-text');
+  messageElement.textContent = text;
+  messageElement.style.color = color;
+
+  // 애니메이션 재시작을 위해 클래스 재설정
+  this.resultMessage.classList.remove('active');
+  void this.resultMessage.offsetWidth; // reflow
+  this.resultMessage.classList.add('active');
 }
 
-// 스핀 버튼 클릭 이벤트
-spinButton.addEventListener('click', () => {
-  // 버튼에 'spinning' 클래스를 추가하여 활성 상태로 변경
-  spinButton.classList.add('spinning');
+  // MealSlot 클래스 내부에 추가
+extractFileName(url) {
+    if (!url || typeof url !== 'string') {
+        console.warn('Invalid URL:', url);
+        return 'unknown';
+    }
+    
+    try {
+        // 쿼리 파라미터나 프래그먼트 제거
+        const cleanUrl = url.split('?')[0].split('#')[0];
+        
+        // 슬래시로 분할하여 마지막 부분 가져오기
+        const parts = cleanUrl.split('/');
+        const lastPart = parts[parts.length - 1];
+        
+        // 점으로 분할하여 확장자 제거
+        const nameParts = lastPart.split('.');
+        const fileName = nameParts[0];
+        
+        return fileName || 'unknown';
+    } catch (error) {
+        console.error('Error extracting filename:', error);
+        return 'unknown';
+    }
+}
 
-  // 각 릴을 1초 간격으로 순차적으로 멈추도록 호출
-  spinReel(reels[0], 1000); // 1초 후에 첫 번째 릴 멈춤
-  spinReel(reels[1], 2000); // 2초 후에 두 번째 릴 멈춤
-  spinReel(reels[2], 3000); // 3초 후에 세 번째 릴 멈춤
+  checkResults() {
+    console.log('Checking results:', this.results);
+    
+    // Check for winning combinations
+    if (this.results[0] === this.results[1] && this.results[1] === this.results[2]) {
+      // Triple match - Jackpot!
+      const tripleFileName = this.results[0].split('/').pop().split('.')[0];
+      this.updateMessage(`대박! ${tripleFileName} 트리플!`, '#FFD700');
+      this.showJackpot();
+      console.log('JACKPOT!');
+    } else if (this.results[0] === this.results[1] || 
+               this.results[1] === this.results[2] || 
+               this.results[0] === this.results[2]) {
+      // Double match
+      let matchingFood;
+      if (this.results[0] === this.results[1]) matchingFood = this.results[0];
+      else if (this.results[1] === this.results[2]) matchingFood = this.results[1];
+      else matchingFood = this.results[0];
+      
+      const fileName = this.extractFileName(matchingFood);
+      console.log('matchingFood =', matchingFood);
+      console.log('fileName =', fileName);
+      
+      this.updateMessage(`Wow! Two ${fileName}s in a day!`, '#90EE90');
+    } 
+    
+    else {
+      // No match
+      const messages = [
+        'Good Combination!',
+        'Perfect Nutrition Balance!',
+        'Nice Choice!'
+      ];
+      this.updateMessage(messages[Math.floor(Math.random() * messages.length)], '#FFA07A');
+      console.log('No match');
+    }
+    
+    // Re-enable spinning
+    this.isSpinning = false;
+    this.spinButton.disabled = false;
+    console.log('Spin complete, button re-enabled');
+  }
 
-  // 모든 릴이 멈춘 후 버튼을 다시 원래 상태로 복구
-  setTimeout(() => {
-    spinButton.classList.remove('spinning');
-  }, 3000);
+  showJackpot() {
+    this.jackpotAnimation.classList.add('active');
+    this.createConfetti();
+    
+    // Hide jackpot animation after 3 seconds
+    setTimeout(() => {
+      this.jackpotAnimation.classList.remove('active');
+    }, 3000);
+  }
+
+  createConfetti() {
+    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#ff69b4'];
+    
+    for (let i = 0; i < 50; i++) {
+      setTimeout(() => {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        
+        this.confettiContainer.appendChild(confetti);
+        
+        // Remove confetti after animation
+        setTimeout(() => {
+          if (confetti.parentNode) {
+            confetti.parentNode.removeChild(confetti);
+          }
+        }, 5000);
+      }, i * 30);
+    }
+  }
+}
+
+// Initialize the game when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, initializing MealSlot...');
+  const game = new MealSlot();
+  
+  // Add some debug info
+  window.mealSlot = game;
 });
+
+// Add some background floating animation
+function createFloatingFood() {
+  const foods = [
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/sushi.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/pizza.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/kimbap.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/taco.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/ramen.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/pasta.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/tteokbokki.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/gukbap.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/chicken.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/salad.png', 
+    'https://raw.githubusercontent.com/syooy3/Mealslot/main/hamburger.png'
+  ];
+
+  const foodContainer = document.createElement('div');
+  foodContainer.style.position = 'fixed';
+  foodContainer.style.width = '40px';
+  foodContainer.style.height = '40px';
+  foodContainer.style.opacity = '0.1';
+  foodContainer.style.pointerEvents = 'none';
+  foodContainer.style.zIndex = '-1';
+  foodContainer.style.left = Math.random() * 100 + '%';
+  foodContainer.style.top = '100vh';
+  foodContainer.style.animation = `fall ${Math.random() * 10 + 15}s linear forwards`;
+  
+  // Create image for floating food
+  const img = document.createElement('img');
+  img.src = foods[Math.floor(Math.random() * foods.length)];
+  img.style.width = '100%';
+  img.style.height = '100%';
+  img.style.objectFit = 'contain';
+  
+  // Fallback if image fails to load
+  img.onerror = () => {
+    foodContainer.innerHTML = '🍽️';
+    foodContainer.style.fontSize = '1.5rem';
+    foodContainer.style.display = 'flex';
+    foodContainer.style.alignItems = 'center';
+    foodContainer.style.justifyContent = 'center';
+  };
+  
+  foodContainer.appendChild(img);
+  document.body.appendChild(foodContainer);
+  
+  setTimeout(() => {
+    if (foodContainer.parentNode) {
+      foodContainer.parentNode.removeChild(foodContainer);
+    }
+  }, 25000);
+}
+
+// Create floating food periodically
+setInterval(createFloatingFood, 4000);
+
+// Add initial floating food
+setTimeout(createFloatingFood, 1000);
