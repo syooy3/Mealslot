@@ -5,17 +5,17 @@ const spinSound = document.getElementById('spin-sound');
 class MealSlot {
   constructor() {
     this.foods = [
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/sushi.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/pizza.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/kimbap.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/taco.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/ramen.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/pasta.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/tteokbokki.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/gukbap.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/chicken.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/salad.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/hamburger.png'
+    'sushi.png', 
+    'pizza.png', 
+    'kimbap.png', 
+    'taco.png', 
+    'ramen.png', 
+    'pasta.png', 
+    'tteokbokki.png', 
+    'gukbap.png', 
+    'chicken.png', 
+    'salad.png', 
+    'hamburger.png'
   ];
     this.reels = document.querySelectorAll('.reel');
     this.spinButton = document.getElementById('spin-button');
@@ -281,17 +281,17 @@ document.addEventListener('DOMContentLoaded', () => {
 // Add some background floating animation
 function createFloatingFood() {
   const foods = [
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/sushi.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/pizza.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/kimbap.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/taco.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/ramen.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/pasta.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/tteokbokki.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/gukbap.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/chicken.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/salad.png', 
-    'https://raw.githubusercontent.com/syooy3/Mealslot/main/hamburger.png'
+    'sushi.png', 
+    'pizza.png', 
+    'kimbap.png', 
+    'taco.png', 
+    'ramen.png', 
+    'pasta.png', 
+    'tteokbokki.png', 
+    'gukbap.png', 
+    'chicken.png', 
+    'salad.png', 
+    'hamburger.png'
   ];
 
   const foodContainer = document.createElement('div');
