@@ -1,6 +1,11 @@
 const hoverSound = document.getElementById('hover-sound');
 const clickSound = document.getElementById('active-sound');
 const spinSound = document.getElementById('spin-sound');
+const reel1Sound = document.getElementById('reel1-sound');
+const reel2Sound = document.getElementById('reel2-sound');
+const reel3Sound = document.getElementById('reel3-sound');
+const doubleSound = document.getElementById('double-sound');
+const nomatchSound = document.getElementById('nomatch-sound');
 
 class MealSlot {
   constructor() {
@@ -129,6 +134,21 @@ class MealSlot {
   stopReel(reelIndex) {
     const reel = this.reels[reelIndex];
     const foodItem = reel.querySelector('.food-item');
+
+    switch (reelIndex) {
+    case 0:
+      reel1Sound.currentTime = 0;
+      reel1Sound.play();
+      break;
+    case 1:
+      reel2Sound.currentTime = 0;
+      reel2Sound.play();
+      break;
+    case 2:
+       reel3Sound.currentTime = 0;
+      reel3Sound.play();
+      break;
+    }
     
     // Clear the spinning interval
     clearInterval(reel.spinInterval);
@@ -203,6 +223,8 @@ extractFileName(url) {
                this.results[1] === this.results[2] || 
                this.results[0] === this.results[2]) {
       // Double match
+      doubleSound.currentTime = 0;
+      doubleSound.play();
       let matchingFood;
       if (this.results[0] === this.results[1]) matchingFood = this.results[0];
       else if (this.results[1] === this.results[2]) matchingFood = this.results[1];
@@ -217,6 +239,8 @@ extractFileName(url) {
     
     else {
       // No match
+       nomatchSound.currentTime = 0;
+       nomatchSound.play();
       const messages = [
         'Good Combination!',
         'Perfect Nutrition Balance!',
