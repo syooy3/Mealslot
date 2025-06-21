@@ -1,5 +1,5 @@
 const hoverSound = document.getElementById('hover-sound');
-const clickSound = document.getElementById('click-sound');
+const clickSound = document.getElementById('active-sound');
 const spinSound = document.getElementById('spin-sound');
 
 class MealSlot {
