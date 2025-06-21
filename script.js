@@ -222,7 +222,7 @@ extractFileName(url) {
         'Perfect Nutrition Balance!',
         'Nice Choice!'
       ];
-      this.updateMessage(messages[Math.floor(Math.random() * messages.length)], '#FFA07A');
+      this.updateMessage(messages[Math.floor(Math.random() * messages.length)], 'white');
       console.log('No match');
     }
     
