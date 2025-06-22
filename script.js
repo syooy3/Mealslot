@@ -455,3 +455,8 @@ setInterval(createFloatingFood, 4000);
 
 // Add initial floating food
 setTimeout(createFloatingFood, 1000);
+
+window.addEventListener('DOMContentLoaded', () => {
+  const app = new MealSlot();
+  app.init();
+});
