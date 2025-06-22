@@ -155,7 +155,7 @@ class MealSlot {
       break;
     }
       this.stoppedReels++;
-  }
+  
   
     if (this.stoppedReels === this.reels.length) {
       // 모든 릴이 멈췄을 때 실행
