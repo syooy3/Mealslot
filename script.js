@@ -258,8 +258,10 @@ extractFileName(url) {
           break;
       }
       
+      this.updateMessage(message, 'black');
       this.showJackpot();
       console.log('JACKPOT!');
+      
     } else if (this.results[0] === this.results[1] || 
                this.results[1] === this.results[2] || 
                this.results[0] === this.results[2]) {
