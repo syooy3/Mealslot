@@ -4,6 +4,7 @@ const spinSound = document.getElementById('spin-sound');
 const reel1Sound = document.getElementById('reel1-sound');
 const reel2Sound = document.getElementById('reel2-sound');
 const reel3Sound = document.getElementById('reel3-sound');
+const jackpotSound = document.getElementById('jackpot-sound');
 const doubleSound = document.getElementById('double-sound');
 const nomatchSound = document.getElementById('nomatch-sound');
 
@@ -217,6 +218,10 @@ extractFileName(url) {
     if (this.results[0] === this.results[1] && this.results[1] === this.results[2]) {
       // Triple match - Jackpot!
       const tripleFileName = this.results[0].split('/').pop().split('.')[0];
+      
+      jackpotSound.currentTime = 0;
+      jackpotSound.play();
+      
       let message = '';
       switch (tripleFileName) {
         case 'sushi':
