@@ -28,7 +28,7 @@ class MealSlot {
     this.resultMessage = document.getElementById('result-message');
     this.jackpotAnimation = document.getElementById('jackpot-animation');
     this.confettiContainer = document.getElementById('confetti-container');
-    this.isSpinning = false;
+    this.stoppedReels = 0;
     this.results = [];
     
     this.init();
@@ -90,6 +90,7 @@ class MealSlot {
   spin() {
     spinSound.currentTime = 0;
     spinSound.play();
+    this.stoppedReels = 0;
 
     if (this.isSpinning) return;
     
@@ -149,6 +150,18 @@ class MealSlot {
        reel3Sound.currentTime = 0;
       reel3Sound.play();
       break;
+
+      this.stoppedReels++;
+
+    if (this.stoppedReels === this.reels.length) {
+      // 모든 릴이 멈췄을 때 실행
+      spinSound.pause();
+      spinSound.currentTime = 0;
+      this.checkResults(); // 결과 확인
+      this.isSpinning = false;
+      this.spinButton.disabled = false;
+      console.log('All reels stopped, spin reset');
+}
     }
     
     // Clear the spinning interval
