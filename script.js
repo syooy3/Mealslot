@@ -92,12 +92,10 @@ class MealSlot {
     spinSound.play();
 
     if (this.isSpinning) return;
-    
     console.log('Starting spin...');
     this.isSpinning = true;
     this.spinButton.disabled = true;
     this.results = [];
-
     this.resultMessage.classList.remove('active');
     
     // Reset any previous jackpot animation
@@ -293,16 +291,16 @@ extractFileName(url) {
     }
     
     
-    spinSound.pause();
-    spinSound.currentTime = 0;
-    this.isSpinning = false;
-    this.spinButton.disabled = false;
-    console.log('Spin complete, button re-enabled');
+   spinSound.pause();
+   spinSound.currentTime = 0;
+   this.isSpinning = false;
+   this.spinButton.disabled = false;
+   console.log('Spin complete, button re-enabled');
   }
 
   showJackpot() {
     this.jackpotAnimation.classList.add('active');
-    this.createBurstConfetti(40);
+    this.createConfetti(50);
     setTimeout(() => {
       this.jackpotAnimation.classList.remove('active');
     }, 3000);
@@ -313,7 +311,7 @@ extractFileName(url) {
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
     
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < count; i++) {
       const confetti = document.createElement('div');
       confetti.classList.add('confetti');
       confetti.style.setProperty('--confetti-color', this.getRandomColor());
