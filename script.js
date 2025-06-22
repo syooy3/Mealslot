@@ -10,9 +10,6 @@ const nomatchSound = document.getElementById('nomatch-sound');
 
 class MealSlot {
   constructor() {
-
-    this.isSpinning = false;
-    this.results = []; 
     this.foods = [
     'sushi.png', 
     'pizza.png', 
@@ -95,10 +92,12 @@ class MealSlot {
     spinSound.play();
 
     if (this.isSpinning) return;
+    
     console.log('Starting spin...');
     this.isSpinning = true;
     this.spinButton.disabled = true;
     this.results = [];
+
     this.resultMessage.classList.remove('active');
     
     // Reset any previous jackpot animation
@@ -115,7 +114,9 @@ class MealSlot {
     setTimeout(() => this.stopReel(0), 1500);
     setTimeout(() => this.stopReel(1), 2000);
     setTimeout(() => this.stopReel(2), 2500);
-
+    
+    // Check results after all reels stop
+    setTimeout(() => this.checkResults(), 3200);
   }
 
   startSpinningReel(reel, index) {
@@ -151,10 +152,7 @@ class MealSlot {
     }
     
     // Clear the spinning interval
-    if (reel.spinInterval) {
-        clearInterval(reel.spinInterval);
-        reel.spinInterval = null;
-    }
+    clearInterval(reel.spinInterval);
     
     // Remove spinning class and add stopping class
     reel.classList.remove('spinning');
@@ -174,24 +172,19 @@ class MealSlot {
       reel.classList.remove('stopping');
     }, 600);
   }
-    if (this.results.length === 3) {
-        // 약간의 지연 후 결과 확인
-        setTimeout(() => this.checkResults(), 500);
-    }
-}
-  
+
   updateMessage(text, color = 'white') {
   const messageElement = this.resultMessage.querySelector('.message-text');
   messageElement.textContent = text;
   messageElement.style.color = color;
 
-
+  // 애니메이션 재시작을 위해 클래스 재설정
   this.resultMessage.classList.remove('active');
   void this.resultMessage.offsetWidth; // reflow
   this.resultMessage.classList.add('active');
 }
 
-
+  // MealSlot 클래스 내부에 추가
 extractFileName(url) {
     if (!url || typeof url !== 'string') {
         console.warn('Invalid URL:', url);
@@ -199,14 +192,14 @@ extractFileName(url) {
     }
     
     try {
-        
+        // 쿼리 파라미터나 프래그먼트 제거
         const cleanUrl = url.split('?')[0].split('#')[0];
         
-        
+        // 슬래시로 분할하여 마지막 부분 가져오기
         const parts = cleanUrl.split('/');
         const lastPart = parts[parts.length - 1];
         
-        
+        // 점으로 분할하여 확장자 제거
         const nameParts = lastPart.split('.');
         const fileName = nameParts[0];
         
@@ -218,23 +211,12 @@ extractFileName(url) {
 }
 
   checkResults() {
+    this.results = ['gukbap.png', 'gukbap.png', 'gukbap.png'];
     console.log('Checking results:', this.results);
-
-    if (this.results.length < 3) {
-        console.log('Not all reels have stopped yet');
-        return;
-    }
     
-    this.reels.forEach((reel, index) => {
-        if (reel.spinInterval) {
-            clearInterval(reel.spinInterval);
-            reel.spinInterval = null;
-        }
-        reel.classList.remove('spinning');
-    });
-    
+    // Check for winning combinations
     if (this.results[0] === this.results[1] && this.results[1] === this.results[2]) {
-    
+      // Triple match - Jackpot!
       const tripleFileName = this.results[0].split('/').pop().split('.')[0];
       
       jackpotSound.currentTime = 0;
@@ -276,31 +258,74 @@ extractFileName(url) {
       }
       
       this.updateMessage(message, 'black');
-      this.showJackpot();
-      this.createConfetti(40);
+      this.showJackpot(); {
+      function createBurstConfetti(count = 30) {
+      const container = document.getElementById('jackpot-confetti');
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+
+      for (let i = 0; i < count; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.setProperty('--confetti-color', getRandomColor());
+      confetti.style.left = `${centerX}px`;
+      confetti.style.top = `${centerY}px`;
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = 100 + Math.random() * 100; // 퍼지는 반경
+      const offsetX = Math.cos(angle) * distance;
+      const offsetY = Math.sin(angle) * distance;
+
+      confetti.animate([
+      {
+        transform: 'translate(0, 0) scale(1)',
+        opacity: 1
+      },
+      {
+        transform: `translate(${offsetX}px, ${offsetY}px) scale(0.8)`,
+        opacity: 0.1
+      }
+      ], {
+        duration: 1200 + Math.random() * 800,
+        easing: 'ease-out',
+        fill: 'forwards'
+      });
+
+      container.appendChild(confetti);
+      setTimeout(() => container.removeChild(confetti), 2000);
+       }
+      }
+
+    function getRandomColor() {
+    const colors = ['#FFD700', '#FF69B4', '#00FFFF', '#ADFF2F', '#FFA500'];
+    return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+      createBurstConfetti(40);
       console.log('JACKPOT!');
+      } 
       
-    } else if (this.results[0] === this.results[1] || 
+      else if (this.results[0] === this.results[1] || 
                this.results[1] === this.results[2] || 
                this.results[0] === this.results[2]) {
-      
+      // Double match
       doubleSound.currentTime = 0;
       doubleSound.play();
-      
       let matchingFood;
       if (this.results[0] === this.results[1]) matchingFood = this.results[0];
       else if (this.results[1] === this.results[2]) matchingFood = this.results[1];
       else matchingFood = this.results[0];
       
       const fileName = this.extractFileName(matchingFood);
-      this.updateMessage(`Wow! Two ${fileName}s in a day!`, '#90EE90');
       console.log('matchingFood =', matchingFood);
-      console.log('fileName =', fileName); 
-    
-    } else {
-      nomatchSound.currentTime = 0;
-      nomatchSound.play();
+      console.log('fileName =', fileName);
       
+      this.updateMessage(`Wow! Two ${fileName}s in a day!`, '#90EE90');
+    } 
+    
+    else {
+      // No match
+       nomatchSound.currentTime = 0;
+       nomatchSound.play();
       const messages = [
         'Good Combination!',
         'Perfect Nutrition Balance!',
@@ -310,56 +335,46 @@ extractFileName(url) {
       console.log('No match');
     }
     
-    
-   spinSound.pause();
-   spinSound.currentTime = 0;
-   this.isSpinning = false;
-   this.spinButton.disabled = false;
-   console.log('Spin complete, button re-enabled');
+    // Re-enable spinning
+    spinSound.pause();
+    spinSound.currentTime = 0;
+    this.isSpinning = false;
+    this.spinButton.disabled = false;
+    console.log('Spin complete, button re-enabled');
   }
 
   showJackpot() {
     this.jackpotAnimation.classList.add('active');
-    this.createConfetti(50);
+    this.createConfetti();
+    
+    // Hide jackpot animation after 3 seconds
     setTimeout(() => {
       this.jackpotAnimation.classList.remove('active');
     }, 3000);
   }
 
-  createConfetti(count=30) {
-    const container = this.confettiContainer;
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
+  createConfetti() {
+    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#ff69b4'];
     
-    for (let i = 0; i < count; i++) {
-      const confetti = document.createElement('div');
-      confetti.classList.add('confetti');
-      confetti.style.setProperty('--confetti-color', this.getRandomColor());
-      confetti.style.left = `${centerX}px`;
-      confetti.style.top = `${centerY}px`;
-
-      const angle = Math.random() * 2 * Math.PI;
-      const distance = 100 + Math.random() * 100;
-      const offsetX = Math.cos(angle) * distance;
-      const offsetY = Math.sin(angle) * distance;
-
-      confetti.animate([
-        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-        { transform: `translate(${offsetX}px, ${offsetY}px) scale(0.8)`, opacity: 0 }
-      ], {
-        duration: 1200 + Math.random() * 800,
-        easing: 'ease-out',
-        fill: 'forwards'
-      });
-      
-        container.appendChild(confetti);
-      setTimeout(() => container.removeChild(confetti), 2000);
-    }
-  }
+    for (let i = 0; i < 50; i++) {
+      setTimeout(() => {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
         
-  getRandomColor() {
-    const colors = ['#FFD700', '#FF69B4', '#00FFFF', '#ADFF2F', '#FFA500'];
-    return colors[Math.floor(Math.random() * colors.length)];
+        this.confettiContainer.appendChild(confetti);
+        
+        // Remove confetti after animation
+        setTimeout(() => {
+          if (confetti.parentNode) {
+            confetti.parentNode.removeChild(confetti);
+          }
+        }, 5000);
+      }, i * 30);
+    }
   }
 }
 
@@ -430,8 +445,3 @@ setInterval(createFloatingFood, 4000);
 
 // Add initial floating food
 setTimeout(createFloatingFood, 1000);
-
-window.addEventListener('DOMContentLoaded', () => {
-  const app = new MealSlot();
-  app.init();
-});
