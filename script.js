@@ -260,6 +260,7 @@ extractFileName(url) {
       
       this.updateMessage(message, 'black');
       this.showJackpot();
+      this.createConfetti(40);
       console.log('JACKPOT!');
       
     } else if (this.results[0] === this.results[1] || 
