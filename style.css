@@ -972,11 +972,11 @@ body {
 @keyframes pulse {
   0% {
     transform: scale(1);
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    text-shadow: 0 0 0px rgba(255, 215, 0, 0.8);
   }
   100% {
     transform: scale(1.1);
-    text-shadow: 0 0 30px rgba(255, 215, 0, 1);
+    text-shadow: 0 0 0px rgba(255, 215, 0, 1);
   }
 }
 
