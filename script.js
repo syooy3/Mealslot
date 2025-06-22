@@ -392,7 +392,7 @@ extractFileName(url) {
       }, i * 30);
     }
   }
-}
+
 
 // Initialize the game when the page loads
 document.addEventListener('DOMContentLoaded', () => {
