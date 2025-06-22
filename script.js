@@ -178,13 +178,13 @@ class MealSlot {
   messageElement.textContent = text;
   messageElement.style.color = color;
 
-  // 애니메이션 재시작을 위해 클래스 재설정
+
   this.resultMessage.classList.remove('active');
   void this.resultMessage.offsetWidth; // reflow
   this.resultMessage.classList.add('active');
 }
 
-  // MealSlot 클래스 내부에 추가
+
 extractFileName(url) {
     if (!url || typeof url !== 'string') {
         console.warn('Invalid URL:', url);
@@ -192,14 +192,14 @@ extractFileName(url) {
     }
     
     try {
-        // 쿼리 파라미터나 프래그먼트 제거
+        
         const cleanUrl = url.split('?')[0].split('#')[0];
         
-        // 슬래시로 분할하여 마지막 부분 가져오기
+        
         const parts = cleanUrl.split('/');
         const lastPart = parts[parts.length - 1];
         
-        // 점으로 분할하여 확장자 제거
+        
         const nameParts = lastPart.split('.');
         const fileName = nameParts[0];
         
@@ -214,9 +214,9 @@ extractFileName(url) {
     this.results = ['gukbap.png', 'gukbap.png', 'gukbap.png'];
     console.log('Checking results:', this.results);
     
-    // Check for winning combinations
+    
     if (this.results[0] === this.results[1] && this.results[1] === this.results[2]) {
-      // Triple match - Jackpot!
+    
       const tripleFileName = this.results[0].split('/').pop().split('.')[0];
       
       jackpotSound.currentTime = 0;
@@ -307,7 +307,7 @@ extractFileName(url) {
       else if (this.results[0] === this.results[1] || 
                this.results[1] === this.results[2] || 
                this.results[0] === this.results[2]) {
-      // Double match
+      
       doubleSound.currentTime = 0;
       doubleSound.play();
       let matchingFood;
@@ -323,7 +323,7 @@ extractFileName(url) {
     } 
     
     else {
-      // No match
+      
        nomatchSound.currentTime = 0;
        nomatchSound.play();
       const messages = [
@@ -335,7 +335,7 @@ extractFileName(url) {
       console.log('No match');
     }
     
-    // Re-enable spinning
+    
     spinSound.pause();
     spinSound.currentTime = 0;
     this.isSpinning = false;
@@ -345,36 +345,46 @@ extractFileName(url) {
 
   showJackpot() {
     this.jackpotAnimation.classList.add('active');
-    this.createConfetti();
-    
-    // Hide jackpot animation after 3 seconds
+    this.createBurstConfetti(40);
     setTimeout(() => {
       this.jackpotAnimation.classList.remove('active');
     }, 3000);
   }
 
-  createConfetti() {
-    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#ff69b4'];
+  createConfetti(count=30) {
+    const container = this.confettiContainer;
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
     
     for (let i = 0; i < 50; i++) {
-      setTimeout(() => {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        confetti.style.animationDelay = Math.random() * 0.5 + 's';
-        
-        this.confettiContainer.appendChild(confetti);
-        
-        // Remove confetti after animation
-        setTimeout(() => {
-          if (confetti.parentNode) {
-            confetti.parentNode.removeChild(confetti);
-          }
-        }, 5000);
-      }, i * 30);
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.setProperty('--confetti-color', this.getRandomColor());
+      confetti.style.left = `${centerX}px`;
+      confetti.style.top = `${centerY}px`;
+
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = 100 + Math.random() * 100;
+      const offsetX = Math.cos(angle) * distance;
+      const offsetY = Math.sin(angle) * distance;
+
+      confetti.animate([
+        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+        { transform: `translate(${offsetX}px, ${offsetY}px) scale(0.8)`, opacity: 0 }
+      ], {
+        duration: 1200 + Math.random() * 800,
+        easing: 'ease-out',
+        fill: 'forwards'
+      });
+      
+        container.appendChild(confetti);
+      setTimeout(() => container.removeChild(confetti), 2000);
     }
+  }
+        
+  getRandomColor() {
+    const colors = ['#FFD700', '#FF69B4', '#00FFFF', '#ADFF2F', '#FFA500'];
+    return colors[Math.floor(Math.random() * colors.length)];
   }
 }
 
