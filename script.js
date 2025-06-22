@@ -258,7 +258,10 @@ extractFileName(url) {
       }
       
       this.updateMessage(message, 'black');
-      this.showJackpot(); {
+      this.showJackpot();
+      this.createBurstConfetti(40);
+      console.log('JACKPOT!');
+      
       function createBurstConfetti(count = 30) {
       const container = document.getElementById('jackpot-confetti');
       const centerX = window.innerWidth / 2;
@@ -271,7 +274,7 @@ extractFileName(url) {
       confetti.style.left = `${centerX}px`;
       confetti.style.top = `${centerY}px`;
       const angle = Math.random() * 2 * Math.PI;
-      const distance = 100 + Math.random() * 100; // 퍼지는 반경
+      const distance = 100 + Math.random() * 100; 
       const offsetX = Math.cos(angle) * distance;
       const offsetY = Math.sin(angle) * distance;
 
@@ -299,10 +302,6 @@ extractFileName(url) {
     const colors = ['#FFD700', '#FF69B4', '#00FFFF', '#ADFF2F', '#FFA500'];
     return colors[Math.floor(Math.random() * colors.length)];
     }
-
-      createBurstConfetti(40);
-      console.log('JACKPOT!');
-      } 
       
       else if (this.results[0] === this.results[1] || 
                this.results[1] === this.results[2] || 
