@@ -10,6 +10,9 @@ const nomatchSound = document.getElementById('nomatch-sound');
 
 class MealSlot {
   constructor() {
+
+    this.isSpinning = false;
+    this.results = []; 
     this.foods = [
     'sushi.png', 
     'pizza.png', 
