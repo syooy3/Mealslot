@@ -211,7 +211,7 @@ extractFileName(url) {
 }
 
   checkResults() {
-    this.results = ['gukbap.png', 'gukbap.png', 'gukbap.png'];
+    this.results = ['sushi.png', 'sushi.png', 'sushi.png'];
     console.log('Checking results:', this.results);
 
     // Check for winning combinations
