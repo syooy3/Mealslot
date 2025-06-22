@@ -88,6 +88,9 @@ class MealSlot {
   }
 
   spin() {
+    spinSound.pause();
+    spinSound.currentTime = 0;
+    
     spinSound.currentTime = 0;
     spinSound.play();
     this.stoppedReels = 0;
@@ -98,7 +101,7 @@ class MealSlot {
     this.isSpinning = true;
     this.spinButton.disabled = true;
     this.results = [];
-
+    this.stoppedReels = 0;
     this.resultMessage.classList.remove('active');
     
     // Reset any previous jackpot animation
@@ -150,9 +153,10 @@ class MealSlot {
        reel3Sound.currentTime = 0;
       reel3Sound.play();
       break;
-
+    }
       this.stoppedReels++;
-
+  }
+  
     if (this.stoppedReels === this.reels.length) {
       // 모든 릴이 멈췄을 때 실행
       spinSound.pause();
