@@ -112,9 +112,7 @@ class MealSlot {
     setTimeout(() => this.stopReel(0), 1500);
     setTimeout(() => this.stopReel(1), 2000);
     setTimeout(() => this.stopReel(2), 2500);
-    
-    // Check results after all reels stop
-    setTimeout(() => this.checkResults(), 3200);
+
   }
 
   startSpinningReel(reel, index) {
@@ -150,7 +148,10 @@ class MealSlot {
     }
     
     // Clear the spinning interval
-    clearInterval(reel.spinInterval);
+    if (reel.spinInterval) {
+        clearInterval(reel.spinInterval);
+        reel.spinInterval = null;
+    }
     
     // Remove spinning class and add stopping class
     reel.classList.remove('spinning');
@@ -170,7 +171,12 @@ class MealSlot {
       reel.classList.remove('stopping');
     }, 600);
   }
-
+    if (this.results.length === 3) {
+        // 약간의 지연 후 결과 확인
+        setTimeout(() => this.checkResults(), 500);
+    }
+}
+  
   updateMessage(text, color = 'white') {
   const messageElement = this.resultMessage.querySelector('.message-text');
   messageElement.textContent = text;
@@ -210,7 +216,19 @@ extractFileName(url) {
 
   checkResults() {
     console.log('Checking results:', this.results);
+
+    if (this.results.length < 3) {
+        console.log('Not all reels have stopped yet');
+        return;
+    }
     
+    this.reels.forEach((reel, index) => {
+        if (reel.spinInterval) {
+            clearInterval(reel.spinInterval);
+            reel.spinInterval = null;
+        }
+        reel.classList.remove('spinning');
+    });
     
     if (this.results[0] === this.results[1] && this.results[1] === this.results[2]) {
     
