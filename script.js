@@ -117,7 +117,7 @@ class MealSlot {
     setTimeout(() => this.stopReel(2), 2500);
     
     // Check results after all reels stop
-    setTimeout(() => this.checkResults(), 3200);
+    setTimeout(() => this.checkResults(), 3500);
   }
 
   startSpinningReel(reel, index) {
@@ -348,7 +348,6 @@ extractFileName(url) {
       console.log('No match');
     }
     
-    // Re-enable spinning
     spinSound.pause();
     spinSound.currentTime = 0;
     this.isSpinning = false;
