@@ -223,10 +223,10 @@ extractFileName(url) {
       let message = '';
       switch (tripleFileName) {
         case 'sushi':
-          message = '新鮮魚!';
+          message = 'Nemo hates you';
           break;
         case 'pizza':
-          message = 'Mamma Mia!';
+          message = 'pizza(x) piZZZa';
           break;
         case 'ramen':
           message = 'Economical!';
@@ -250,7 +250,7 @@ extractFileName(url) {
           message = 'I love K-food';
           break;
         case 'taco':
-          message = '¡Qué Rico!';
+          message = 'Taco Bell needs YOU';
           break;
         default:
           message = 'JACKPOT!';
