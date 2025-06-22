@@ -216,44 +216,7 @@ extractFileName(url) {
     if (this.results[0] === this.results[1] && this.results[1] === this.results[2]) {
       // Triple match - Jackpot!
       const tripleFileName = this.results[0].split('/').pop().split('.')[0];
-      
-      let message = '';
-      switch (tripleFileName) {
-        case 'sushi':
-          message = '新鮮魚!';
-          break;
-        case 'pizza':
-          message = 'Mamma Mia!';
-          break;
-        case 'ramen':
-          message = 'Economical!';
-          break;
-        case 'hamburger':
-          message = 'Burger King';
-          break;
-        case 'gukbap':
-          message = 'K-ajossi Core';
-          break;
-        case 'pasta':
-          message = 'Italiana!';
-          break;
-        case 'salad':
-          message = '#Eatgreen';
-          break;
-        case 'kimbap':
-          message = 'Picnic Day';
-          break;
-        case 'tteokbokki':
-          message = 'I love K-food';
-          break;
-        case 'taco':
-          message = '¡Qué Rico!';
-          break;
-        default:
-          message = 'JACKPOT!';
-          break;
-      }
-      
+      this.updateMessage(`대박! ${tripleFileName} 트리플!`, '#FFD700');
       this.showJackpot();
       console.log('JACKPOT!');
     } else if (this.results[0] === this.results[1] || 
@@ -380,7 +343,7 @@ function createFloatingFood() {
     foodContainer.style.display = 'flex';
     foodContainer.style.alignItems = 'center';
     foodContainer.style.justifyContent = 'center';
-  };More actions
+  };
 
   foodContainer.appendChild(img);
   document.body.appendChild(foodContainer);
