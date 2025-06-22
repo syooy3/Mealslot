@@ -1,4 +1,4 @@
-const hoverSound = document.getElementById('hover-sound');Add commentMore actions
+const hoverSound = document.getElementById('hover-sound');
 const clickSound = document.getElementById('active-sound');
 const spinSound = document.getElementById('spin-sound');
 const reel1Sound = document.getElementById('reel1-sound');
