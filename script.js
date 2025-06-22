@@ -259,7 +259,7 @@ extractFileName(url) {
       
       this.updateMessage(message, 'black');
       this.showJackpot();
-      this.createBurstConfetti(40);
+      this.createConfetti(40);
       console.log('JACKPOT!');
       
     } else if (this.results[0] === this.results[1] || 
