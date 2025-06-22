@@ -209,7 +209,6 @@ extractFileName(url) {
 }
 
   checkResults() {
-    this.results = ['gukbap.png', 'gukbap.png', 'gukbap.png'];
     console.log('Checking results:', this.results);
     
     
