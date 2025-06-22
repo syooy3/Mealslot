@@ -262,28 +262,27 @@ extractFileName(url) {
       this.createBurstConfetti(40);
       console.log('JACKPOT!');
       
-      else if (this.results[0] === this.results[1] || 
+    } else if (this.results[0] === this.results[1] || 
                this.results[1] === this.results[2] || 
                this.results[0] === this.results[2]) {
       
       doubleSound.currentTime = 0;
       doubleSound.play();
+      
       let matchingFood;
       if (this.results[0] === this.results[1]) matchingFood = this.results[0];
       else if (this.results[1] === this.results[2]) matchingFood = this.results[1];
       else matchingFood = this.results[0];
       
       const fileName = this.extractFileName(matchingFood);
-      console.log('matchingFood =', matchingFood);
-      console.log('fileName =', fileName);
-      
       this.updateMessage(`Wow! Two ${fileName}s in a day!`, '#90EE90');
-    } 
+      console.log('matchingFood =', matchingFood);
+      console.log('fileName =', fileName); 
     
-    else {
+    } else {
+      nomatchSound.currentTime = 0;
+      nomatchSound.play();
       
-       nomatchSound.currentTime = 0;
-       nomatchSound.play();
       const messages = [
         'Good Combination!',
         'Perfect Nutrition Balance!',
