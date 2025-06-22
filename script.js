@@ -258,7 +258,49 @@ extractFileName(url) {
       }
       
       this.updateMessage(message, 'black');
-      this.showJackpot();
+      this.showJackpot(); {
+      function createBurstConfetti(count = 30) {
+      const container = document.getElementById('jackpot-confetti');
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+
+      for (let i = 0; i < count; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.setProperty('--confetti-color', getRandomColor());
+      confetti.style.left = `${centerX}px`;
+      confetti.style.top = `${centerY}px`;
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = 100 + Math.random() * 100; // 퍼지는 반경
+      const offsetX = Math.cos(angle) * distance;
+      const offsetY = Math.sin(angle) * distance;
+
+      confetti.animate([
+      {
+        transform: 'translate(0, 0) scale(1)',
+        opacity: 1
+      },
+      {
+        transform: `translate(${offsetX}px, ${offsetY}px) scale(0.8)`,
+        opacity: 0.1
+      }
+      ], {
+        duration: 1200 + Math.random() * 800,
+        easing: 'ease-out',
+        fill: 'forwards'
+      });
+
+      container.appendChild(confetti);
+      setTimeout(() => container.removeChild(confetti), 2000);
+       }
+      }
+
+    function getRandomColor() {
+    const colors = ['#FFD700', '#FF69B4', '#00FFFF', '#ADFF2F', '#FFA500'];
+    return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+      createBurstConfetti(40);
       console.log('JACKPOT!');
       } 
       
