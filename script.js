@@ -304,7 +304,7 @@ extractFileName(url) {
       console.log('JACKPOT!');
       } 
       
-      else if (this.results[0] === this.results[1] || 
+    } else if (this.results[0] === this.results[1] || 
                this.results[1] === this.results[2] || 
                this.results[0] === this.results[2]) {
       // Double match
