@@ -6,6 +6,7 @@ const reel2Sound = document.getElementById('reel2-sound');
 const reel3Sound = document.getElementById('reel3-sound');
 const doubleSound = document.getElementById('double-sound');
 const nomatchSound = document.getElementById('nomatch-sound');
+const jackpotSound = document.getElementById('jackpot-sound');
 
 class MealSlot {
   constructor() {
@@ -215,6 +216,8 @@ extractFileName(url) {
     // Check for winning combinations
     if (this.results[0] === this.results[1] && this.results[1] === this.results[2]) {
       // Triple match - Jackpot!
+      jackpotSound.currentTime = 0;
+      jackpotSound.play();
       const tripleFileName = this.results[0].split('/').pop().split('.')[0];
 
       let message = '';
